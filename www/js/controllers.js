@@ -73,7 +73,7 @@
           $scope.scrollBottom();
         }
 
-        appServices.sendInformation($scope.userData.message)
+        appServices.sendInformation($scope.userData.message?$scope.userData.message:"Hola")
           .then(function (response) {
             if (response.message) {
               $scope.userData.data = $scope.userData.data.concat({ title: response.message });
