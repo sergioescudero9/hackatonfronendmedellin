@@ -79,6 +79,10 @@
               $scope.userData.data = $scope.userData.data.concat({ title: response.message });
               $scope.userData.load = false;
               $scope.scrollBottom();
+            }else if(response.arrayTipos){
+                $scope.userData.data = $scope.userData.data.concat(response.arrayTipos);
+                $scope.userData.load = false;
+                $scope.scrollBottom();
             }
 
 
