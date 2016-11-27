@@ -1,0 +1,60 @@
+<ion-view view-title="Search">
+	<ion-content>
+		<!--<ion-list>
+      <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
+        {{playlist.title}}
+      </ion-item>
+    </ion-list>-->
+		<div ng-repeat="msn in userData.data" ng-switch="msn.tipo">
+			<div ng-switch-when="card">
+				<div class="list card">
+					<div class="item item-avatar">
+						<img src="../img/WatsonLogo.png">
+						<h2>Sara</h2>
+					</div>
+					<div class="item item-body">
+						<h2 class="center">{{msn.nombre}}</h2>
+						<div class="center">
+							<img class="full-image" src="{{msn.imagenurl}}">
+						</div>
+						<p class="">
+							<b>Descripción: </b>{{msn.descripcion}}
+						</p>
+						<p class="">
+							<b>Teléfono: </b>{{msn.telefono}}
+						</p>
+						<p class="">
+							<b>Dirección: </b>{{msn.direccion}}
+						</p>
+					</div>
+
+				</div>
+
+			</div>
+			<div class="card" ng-switch-default>
+				<div class="item item-text-wrap balanced-bg light" ng-if="msn.user">
+					{{msn.title}}
+				</div>
+				<div class="item item-text-wrap" ng-if="!msn.user">
+					{{msn.title}}
+				</div>
+			</div>
+
+		</div>
+		<div class="center" ng-if="userData.load">
+			<ion-spinner icon="spiral"></ion-spinner>
+		</div>
+
+	</ion-content>
+	<ion-footer-bar align-title="left" class="bar-positive">
+
+		<label class="item item-input">
+		<input type="text" name="message" ng-keypress="enter($event)" ng-model="userData.message" placeholder="Type a message" required
+		/>
+		</label>
+		<div class="buttons">
+			<button ng-click="sendInformation()" ng-disabled="!userData.message" class="button"><i class="icon ion-android-send"></i></button>
+		</div>
+
+	</ion-footer-bar>
+</ion-view>
