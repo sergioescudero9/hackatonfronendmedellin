@@ -55,13 +55,9 @@
 
     .controller('ChatCtrl', function ($scope, appServices, $timeout) {
       $scope.userData = {};
-      appServices.getInformation().then(function (data) {
-        $scope.userData.data = data.arrayTipos;
-      }).catch(function (error) {
-        $scope.userData.data = [];
-      })
-
+      $scope.userData.data = [];
       $scope.sendInformation = sendInformation;
+      $scope.sendInformation();
       $scope.enter = function (event) {
         if (event.which == 13 && $scope.userData.message) {
           event.preventDefault();
@@ -70,19 +66,29 @@
       }
 
       function sendInformation() {
-        appServices.sendInformation($scope.userData.message).then(function (response) {
-          $scope.userData.data = $scope.userData.data.concat({title:response});
-          $scope.userData.load = false;
+        
+        if ($scope.userData.message) {
+          $scope.userData.load = true;
+          $scope.userData.data.push({ "title": $scope.userData.message, "user": true });
           $scope.scrollBottom();
-        }).catch(function (error) {
-          $scope.userData.data = [];  
-        })                 
-        $scope.userData.load = true;
-        $scope.userData.data.push({"title": $scope.userData.message,"user":true})
-        $scope.scrollBottom();
+        }
+
+        appServices.sendInformation($scope.userData.message)
+          .then(function (response) {
+            if (response.message) {
+              $scope.userData.data = $scope.userData.data.concat({ title: response.message });
+              $scope.userData.load = false;
+              $scope.scrollBottom();
+            }
+
+
+          }).catch(function (error) {
+            $scope.userData.data = [];
+          })
+
         $scope.userData.message = "";
 
-         
+
       }
 
 
